@@ -17,6 +17,7 @@ const Candidate = require('./model/candidate');
 const CandidatePair = require('./model/candidatePair');
 const People = require('./model/people');
 const Tps = require('./model/tps');
+const Admin = require('./model/admin');
 
 const indexRoutes = require('./routes/index');
 
@@ -36,9 +37,12 @@ People.belongsTo(Tps);
 CandidatePair.hasMany(People);
 CandidatePair.hasMany(Candidate);
 Candidate.belongsTo(CandidatePair);
+Admin.hasOne(Tps);
 
 sequelize
-    .sync()
+    .sync({
+        force: false
+    })
     .then(result => {
         app.listen(PORT, () => {
             console.log(`Server is Running on port ${PORT}`);
